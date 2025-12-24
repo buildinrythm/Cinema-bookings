@@ -35,6 +35,7 @@ public class Cinemabookings {
         showSummary(movieTitles[movieIndex], ticketAmount, ticketPrice, totalCost);
 
         scanner.close();
+        exitMessage();
     }
 
     // 1. Welcome message
@@ -94,5 +95,10 @@ public class Cinemabookings {
         System.out.println("Tickets: " + amount);
         System.out.println("Price per ticket: €" + price);
         System.out.println("Total cost: €" + total);
+    }
+
+    // 6. Show booking summary
+    public static void exitMessage() {
+        System.out.println("Thank you for your purchase. Enjoy the move!!");
     }
 }
