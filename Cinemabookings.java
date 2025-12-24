@@ -99,6 +99,6 @@ public class Cinemabookings {
 
     // 6. Show booking summary
     public static void exitMessage() {
-        System.out.println("Thank you for your purchase. Enjoy the move!!");
+        System.out.println("Thank you for your purchase. Enjoy the movie!!");
     }
 }
