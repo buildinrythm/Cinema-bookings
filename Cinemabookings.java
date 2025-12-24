@@ -1,7 +1,23 @@
 import java.util.Scanner;
-import java.util.ArrayList;
 
 public class Cinemabookings {
+
+    // Movie data stored in arrays
+    static String[] movieTitles = {
+        "The God Father",
+        "Batman Forever",
+        "The Dark Knight",
+        "Avengers Endgame",
+        "The Naked Gun"
+    };
+
+    static double[] moviePrices = {
+        10.00,
+        12.00,
+        11.00,
+        9.00,
+        8.00
+    };
 
     public static void main(String[] args) {
 
@@ -10,13 +26,13 @@ public class Cinemabookings {
         showWelcomeMessage();
         showMovies();
 
-        int movieChoice = getMovieChoice(scanner);
-        double ticketPrice = getTicketPrice(movieChoice);
+        int movieIndex = getMovieChoice(scanner);
+        double ticketPrice = moviePrices[movieIndex];
 
         int ticketAmount = getTicketAmount(scanner);
         double totalCost = calculateTotal(ticketPrice, ticketAmount);
 
-        showSummary(ticketAmount, ticketPrice, totalCost);
+        showSummary(movieTitles[movieIndex], ticketAmount, ticketPrice, totalCost);
 
         scanner.close();
     }
@@ -26,52 +42,55 @@ public class Cinemabookings {
         System.out.println("Welcome to the cinema!");
     }
 
-    // 2. Show available movies
+    // 2. Display movies using arrays
     public static void showMovies() {
         System.out.println("\nAvailable Movies:");
-        System.out.println("1. The God Father (€10.00)");
-        System.out.println("2. Batman Forever (€12.00)");
-        System.out.println("3. The Dark Knight (€11.00)");
-        System.out.println("4. Avengers Endgame (€9.00)");
-        System.out.println("5. The Naked Gun (€8.00)");
-    }
-
-    // 3. Get movie choice
-    public static int getMovieChoice(Scanner scanner) {
-        System.out.print("\nSelect a movie (1-5): ");
-        int choice = scanner.nextInt();
-        scanner.nextLine(); // consume newline
-        return choice;
-    }
-
-    // 4. Determine ticket price
-    public static double getTicketPrice(int movieChoice) {
-        switch (movieChoice) {
-            case 1: return 10.00;
-            case 2: return 12.00;
-            case 3: return 11.00;
-            case 4: return 9.00;
-            case 5: return 8.00;
-            default:
-                System.out.println("Invalid movie choice. Default price applied.");
-                return 10.00;
+        for (int i = 0; i < movieTitles.length; i++) {
+            System.out.println((i + 1) + ". " + movieTitles[i] + " (€" + moviePrices[i] + ")");
         }
     }
 
-    // 5. Get ticket amount
-    public static int getTicketAmount(Scanner scanner) {
-        System.out.print("How many tickets would you like? ");
-        return scanner.nextInt();
+    // 3. Get movie choice (returns array index)
+    public static int getMovieChoice(Scanner scanner) {
+        int choice;
+
+        while (true) {
+            System.out.print("\nSelect a movie (1-" + movieTitles.length + "): ");
+            choice = scanner.nextInt();
+
+            if (choice >= 1 && choice <= movieTitles.length) {
+                return choice - 1; // convert to index
+            } else {
+                System.out.println("Invalid choice. Try again.");
+            }
+        }
     }
 
-    // 6. Calculate total cost
+    // 4. Get number of tickets
+    public static int getTicketAmount(Scanner scanner) {
+        int amount;
+
+        while (true) {
+            System.out.print("How many tickets would you like? ");
+            amount = scanner.nextInt();
+
+            if (amount > 0) {
+                return amount;
+            } else {
+                System.out.println("Ticket amount must be greater than 0.");
+            }
+        }
+    }
+
+    // 5. Calculate total
     public static double calculateTotal(double price, int amount) {
         return price * amount;
     }
 
-    // 7. Show booking summary
-    public static void showSummary(int amount, double price, double total) {
+    // 6. Show booking summary
+    public static void showSummary(String movie, int amount, double price, double total) {
         System.out.println("\n--- Booking Summary ---");
+        System.out.println("Movie: " + movie);
         System.out.println("Tickets: " + amount);
         System.out.println("Price per ticket: €" + price);
         System.out.println("Total cost: €" + total);
